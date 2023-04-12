@@ -2,6 +2,7 @@
 const express = require('express');
 const hbs = require('express-handlebars');
 const path = require('path');
+const dotenv = require('dotenv').config();
 
 // 3rd party requirements
 const passport = require('passport');
@@ -30,6 +31,8 @@ const {
 } = require('./controllers/user');
 
 const { postPostView, deleteGetView, likeGetView } = require('./controllers/post');
+
+global.__basedir = __dirname;
 
 // Setup express and router
 const app = express();
@@ -90,7 +93,7 @@ app.use('/css', express.static(path.join(__dirname, '/node_modules/bootstrap/dis
 
 // Initialization of handle bars 
 // (what extension to use, any extra helper scripts and the path for partials)
-let hbsEngine = hbs.create({ extname: '.hbs', helpers: {hbHelpers, hbMoment}, partialsDir: path.join(__dirname, '/partials/') });
+let hbsEngine = hbs.create({ extname: '.hbs', helpers: {hbHelpers, hbMoment}, partialsDir: path.join(__dirname, '/views', '/partials/') });
 
 // Tell express we are using handlebars
 app.engine(hbsEngine.extname, hbsEngine.engine);
